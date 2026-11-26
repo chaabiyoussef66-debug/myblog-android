@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - 'MyBlog-Android-Source.zip'
+      - 'MyBlog-Android-Source-Fixed.zip'
       - '.github/workflows/android.yml'
 
 permissions:
@@ -19,7 +20,11 @@ jobs:
 
       - name: Extract project source
         run: |
-          unzip -q MyBlog-Android-Source.zip
+          if [ -f MyBlog-Android-Source-Fixed.zip ]; then
+            unzip -q MyBlog-Android-Source-Fixed.zip
+          else
+            unzip -q MyBlog-Android-Source.zip
+          fi
           test -f myblog/android-app/app/build.gradle
 
       - name: Set up Java 17
